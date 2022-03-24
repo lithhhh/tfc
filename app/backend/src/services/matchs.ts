@@ -9,6 +9,7 @@ export default class MatchsService {
   ) {}
 
   // pense em como você pode unir os métodos abaixo (inProgressRequest e matchRequest);
+  // ps: sem que o Lint reclame...
 
   async inProgressRequest(inProgress: boolean) {
     const matchs = await this.matchs
@@ -45,5 +46,11 @@ export default class MatchsService {
     const matchInserted = await this.matchs.create(body);
 
     return { code: 200, message: matchInserted };
+  }
+
+  async patchProgress(id: number) {
+    await this.matchs.update({ inProgress: false }, { where: { id } });
+
+    return { code: 204 };
   }
 }

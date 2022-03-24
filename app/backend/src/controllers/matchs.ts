@@ -8,6 +8,7 @@ export default class MatchController {
     this.service = new MatchsService();
     this.getMatchs = this.getMatchs.bind(this);
     this.createMatch = this.createMatch.bind(this);
+    this.patchMatch = this.patchMatch.bind(this);
   }
 
   async getMatchs(req: Request, res: Response) {
@@ -26,5 +27,12 @@ export default class MatchController {
     const { code, message } = await this.service.createMatch(req.body);
 
     return res.status(code).json(message);
+  }
+
+  async patchMatch(req: Request, res: Response) {
+    const { id } = req.params;
+    const { code } = await this.service.patchProgress(Number(id));
+
+    return res.status(code).end();
   }
 }

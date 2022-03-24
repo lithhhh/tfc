@@ -25,5 +25,10 @@ export default class MatchRoute {
       matchValidation,
       this.matchsController.createMatch,
     );
+
+    this.match.patch(
+      '/:id/finish',
+      this.matchsController.patchMatch,
+    );
   }
 }
