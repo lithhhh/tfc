@@ -7,6 +7,7 @@ export default class MatchController {
   constructor() {
     this.service = new MatchsService();
     this.getMatchs = this.getMatchs.bind(this);
+    this.createMatch = this.createMatch.bind(this);
   }
 
   async getMatchs(req: Request, res: Response) {
@@ -19,5 +20,11 @@ export default class MatchController {
 
     const { code, matchs } = await this.service.matchRequest();
     return res.status(code).json(matchs);
+  }
+
+  async createMatch(req: Request, res: Response) {
+    const { code, message } = await this.service.createMatch(req.body);
+
+    return res.status(code).json(message);
   }
 }

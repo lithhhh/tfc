@@ -43,6 +43,7 @@ Match.init({
   },
   inProgress: {
     type: DataTypes.BOOLEAN,
+    defaultValue: true,
     allowNull: false,
   },
 }, {

@@ -16,7 +16,6 @@ export default class ClubsService {
       where: { id },
       raw: true,
     });
-    console.log(club);
 
     if (club === null) return { message: 'Club not found', code: 404 };
 

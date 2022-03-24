@@ -1,5 +1,6 @@
 import Match from '../database/models/Match';
 import Clubs from '../database/models/Club';
+import { IMatch } from '../interfaces';
 
 export default class MatchsService {
   constructor(
@@ -32,5 +33,17 @@ export default class MatchsService {
           ] },
       );
     return { matchs, code: 200 };
+  }
+
+  async createMatch(body: IMatch) {
+    if (body.awayTeam === body.homeTeam) {
+      return {
+        message: 'It is not possible to create a match with two equal teams',
+        code: 400,
+      };
+    }
+    const matchInserted = await this.matchs.create(body);
+
+    return { code: 200, message: matchInserted };
   }
 }

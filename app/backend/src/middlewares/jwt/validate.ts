@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
-import { JsonWebTokenError } from 'jsonwebtoken';
+// import { JsonWebTokenError } from 'jsonwebtoken'; implemente isso
 import tokenValidation from '../joi/token';
 import { jwt } from '../../utils';
 
@@ -17,7 +17,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
     return next();
   } catch (e) {
     console.log(e);
-    console.log(JsonWebTokenError);
     return res.status(401).json({ message: 'Expired or invalid token' });
   }
 };

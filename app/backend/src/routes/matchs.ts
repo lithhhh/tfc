@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { MatchController } from '../controllers';
+import { matchValidation, authToken } from '../middlewares';
 
 export default class MatchRoute {
   public match: Router;
@@ -16,6 +17,13 @@ export default class MatchRoute {
     this.match.get(
       '/',
       this.matchsController.getMatchs,
+    );
+
+    this.match.post(
+      '/',
+      authToken,
+      matchValidation,
+      this.matchsController.createMatch,
     );
   }
 }

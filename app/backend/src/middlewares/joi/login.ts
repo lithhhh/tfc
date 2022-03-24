@@ -16,7 +16,7 @@ const schema = Joi.object({
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   const { error } = schema.validate(req.body);
-  console.log(error?.message);
+
   if (error) {
     if (error.message.includes('filled')) return res.status(401).json({ message: error.message });
     return res.status(422).json({ message: error.message });

@@ -48,8 +48,6 @@ describe('testes de retorno da rota /matchs', () => {
       let chaiHttpResponse: Response = await chai
       .request(app)
       .get('/matchs');
-      console.log(chaiHttpResponse.body);
-      console.log(matchMock, 'mock');
 
       expect(chaiHttpResponse.body).to.be.deep.equal(matchMock);
     });
