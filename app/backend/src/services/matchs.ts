@@ -39,13 +39,23 @@ export default class MatchsService {
   async createMatch(body: IMatch) {
     if (body.awayTeam === body.homeTeam) {
       return {
-        message: 'It is not possible to create a match with two equal teams',
+        message: { message: 'It is not possible to create a match with two equal teams' },
         code: 400,
       };
     }
+
+    const teams = await this.clubs.findAll({
+      where: { id: [body.awayTeam, body.homeTeam] },
+      raw: true,
+    });
+
+    if (teams.length < 2) {
+      return { message: { message: 'There is no team with such id!' }, code: 404 };
+    }
+
     const matchInserted = await this.matchs.create(body);
 
-    return { code: 200, message: matchInserted };
+    return { code: 200, matchInserted };
   }
 
   async patchProgress(id: number) {
