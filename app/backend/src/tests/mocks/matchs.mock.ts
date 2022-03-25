@@ -1,4 +1,4 @@
-export default [
+const matchMock = [
   {
     "id": 1,
     "homeTeam": 16,
@@ -27,4 +27,15 @@ export default [
       "clubName": "Internacional"
     }
   }
-]
+];
+
+const createdMatch = {
+	"inProgress": true,
+	"id": 49,
+	"homeTeam": 1,
+	"homeTeamGoals": 1,
+	"awayTeam": 16,
+	"awayTeamGoals": 4
+}
+
+export { createdMatch, matchMock }

@@ -53,9 +53,7 @@ export default class MatchsService {
       return { message: { message: 'There is no team with such id!' }, code: 401 };
     }
 
-    const matchInserted = await this.matchs.create(body);
-
-    return { code: 201, matchInserted };
+    return { code: 201, message: await this.matchs.create(body) };
   }
 
   async patchProgress(id: number) {

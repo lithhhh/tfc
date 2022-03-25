@@ -11,7 +11,7 @@ import { app } from '../app';
   ** referência: https://stackoverflow.com/questions/53765895/how-to-extend-express-request-type-in-a-ts-node-project
 */
 import { Response } from 'superagent';
-import matchMock from './mocks/matchs.mock';
+import { matchMock, createdMatch } from './mocks/matchs.mock';
 import { IMatchWithScore } from '../interfaces'
 
 chai.use(chaiHttp);
@@ -127,7 +127,98 @@ describe('testes de retorno da rota /matchs', () => {
       .request(app)
       .patch('/matchs/1/finish');
 
-      expect(chaiHttpResponse.status).to.be.equal(204);
+      expect(chaiHttpResponse.status).to.be.equal(200);
+    });
+  });
+
+  describe('testa rota /match (POST)', async () => {
+    const login = 
+    {
+      "email": "admin@admin.com",
+      "password":	"$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW"
+    };
+
+    const { body: { token } } = await chai
+    .request(app)
+    .post('/login')
+    .send(login);
+
+    describe('testa casos de erro', () => {
+      before(() => {
+        sinon.stub(Match, 'findAll').resolves([matchMock[0]] as unknown as []);
+        sinon.stub(Match, 'create').resolves(createdMatch as unknown as Match);
+      });
+  
+      after(() => {
+        (Match.findAll as sinon.SinonStub).restore();
+        (Match.create as sinon.SinonStub).restore();
+      });
+  
+      it('testa se não é possível adicionar partida com times inexistentes', async () => {
+        let { status, body }: Response = await chai
+        .request(app)
+        .post('/matchs')
+        .set('Authorization', token)
+        .send(
+          {
+            "homeTeam": 123913,
+            "homeTeamGoals": 1,
+            "awayTeam": 1298318,
+            "awayTeamGoals": 4
+          }
+        );
+
+        expect(status).to.be.equal(401);
+        expect(body.message).to.be.equal('There is no team with such id!');
+      });
+
+      it('testa se não é possível adicionar partida com times iguais', async () => {
+        let { status, body }: Response = await chai
+        .request(app)
+        .post('/matchs')
+        .set('Authorization', token)
+        .send(
+          {
+            "homeTeam": 1,
+            "homeTeamGoals": 1,
+            "awayTeam": 1,
+            "awayTeamGoals": 4
+          }
+        );
+
+        expect(status).to.be.equal(401);
+        expect(body.message).to.be.equal('It is not possible to create a match with two equal teams');
+      });
+    });
+
+    describe('testa caso de sucesso', () => {
+      before(() => {
+        sinon.stub(Match, 'findAll').resolves(matchMock as []);
+        sinon.stub(Match, 'create').resolves(createdMatch as unknown as Match);
+      });
+  
+      after(() => {
+        (Match.findAll as sinon.SinonStub).restore();
+        (Match.create as sinon.SinonStub).restore();
+      });
+
+      it('testa se é retornado o body/status esperados', async () => {
+        let chaiHttpResponse: Response = await chai
+        .request(app)
+        .post('/matchs')
+        .set('Authorization', token)
+        .send(
+          {
+            "homeTeam": 1,
+            "homeTeamGoals": 1,
+            "awayTeam": 2,
+            "awayTeamGoals": 4
+          }
+        );
+
+        expect(chaiHttpResponse.status).to.be.equal(201);
+        expect(chaiHttpResponse.body).to.be.deep.equal(createdMatch);
+      })
     });
   });
 });
