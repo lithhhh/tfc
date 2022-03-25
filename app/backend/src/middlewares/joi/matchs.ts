@@ -6,6 +6,7 @@ const schema = Joi.object({
   awayTeam: Joi.number().min(1).required(),
   homeTeamGoals: Joi.number().min(0).required(),
   awayTeamGoals: Joi.number().min(0).required(),
+  inProgress: Joi.boolean(),
 });
 
 export default async (req: Request, res: Response, next: NextFunction) => {

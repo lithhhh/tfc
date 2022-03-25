@@ -40,7 +40,7 @@ export default class MatchsService {
     if (body.awayTeam === body.homeTeam) {
       return {
         message: { message: 'It is not possible to create a match with two equal teams' },
-        code: 400,
+        code: 401,
       };
     }
 
@@ -50,7 +50,7 @@ export default class MatchsService {
     });
 
     if (teams.length < 2) {
-      return { message: { message: 'There is no team with such id!' }, code: 404 };
+      return { message: { message: 'There is no team with such id!' }, code: 401 };
     }
 
     const matchInserted = await this.matchs.create(body);
@@ -61,6 +61,6 @@ export default class MatchsService {
   async patchProgress(id: number) {
     await this.matchs.update({ inProgress: false }, { where: { id } });
 
-    return { code: 204 };
+    return { code: 200 };
   }
 }
