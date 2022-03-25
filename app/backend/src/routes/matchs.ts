@@ -28,7 +28,12 @@ export default class MatchRoute {
 
     this.match.patch(
       '/:id/finish',
-      this.matchsController.patchMatch,
+      this.matchsController.patchMatchProgress,
+    );
+
+    this.match.patch(
+      '/:id',
+      this.matchsController.patchMatchScore,
     );
   }
 }

@@ -1,6 +1,6 @@
 import Match from '../database/models/Match';
 import Clubs from '../database/models/Club';
-import { IMatch } from '../interfaces';
+import { IMatch, IScore } from '../interfaces';
 
 export default class MatchsService {
   constructor(
@@ -58,6 +58,12 @@ export default class MatchsService {
 
   async patchProgress(id: number) {
     await this.matchs.update({ inProgress: false }, { where: { id } });
+
+    return { code: 200 };
+  }
+
+  async patchScore(id: number, body: IScore) {
+    await this.matchs.update(body, { where: { id } });
 
     return { code: 200 };
   }

@@ -6,11 +6,14 @@ interface IId {
   id: number
 }
 
-export interface IMatch {
-  homeTeam: number
-  awayTeam: number
+export interface IScore {
   awayTeamGoals: number
   homeTeamGoals: number
+}
+
+export interface IMatch extends IScore {
+  homeTeam: number
+  awayTeam: number
   inProgress: boolean
 }
 

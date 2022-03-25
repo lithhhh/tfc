@@ -1,5 +1,5 @@
 import { ILogin, IJwtPayload, Authorization, IId } from './login';
-import { IMatch, IMatchWithScore } from './match';
+import { IMatch, IMatchWithScore, IScore } from './match';
 
 export {
   ILogin,
@@ -8,4 +8,5 @@ export {
   IId,
   IMatch,
   IMatchWithScore,
+  IScore,
 };

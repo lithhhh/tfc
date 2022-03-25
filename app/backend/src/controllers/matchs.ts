@@ -6,9 +6,11 @@ export default class MatchController {
 
   constructor() {
     this.service = new MatchsService();
+
     this.getMatchs = this.getMatchs.bind(this);
     this.createMatch = this.createMatch.bind(this);
-    this.patchMatch = this.patchMatch.bind(this);
+    this.patchMatchProgress = this.patchMatchProgress.bind(this);
+    this.patchMatchScore = this.patchMatchScore.bind(this);
   }
 
   async getMatchs(req: Request, res: Response) {
@@ -29,9 +31,16 @@ export default class MatchController {
     return res.status(code).json(message);
   }
 
-  async patchMatch(req: Request, res: Response) {
+  async patchMatchProgress(req: Request, res: Response) {
     const { id } = req.params;
     const { code } = await this.service.patchProgress(Number(id));
+
+    return res.status(code).end();
+  }
+
+  async patchMatchScore(req: Request, res: Response) {
+    const { id } = req.params;
+    const { code } = await this.service.patchScore(Number(id), req.body);
 
     return res.status(code).end();
   }
