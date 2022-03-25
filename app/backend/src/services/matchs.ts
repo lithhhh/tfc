@@ -55,7 +55,7 @@ export default class MatchsService {
 
     const matchInserted = await this.matchs.create(body);
 
-    return { code: 200, matchInserted };
+    return { code: 201, matchInserted };
   }
 
   async patchProgress(id: number) {
