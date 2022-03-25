@@ -22,7 +22,7 @@ export default class MatchRoute {
     this.match.post(
       '/',
       authToken,
-      matchValidation,
+      /* matchValidation, */
       this.matchsController.createMatch,
     );
 

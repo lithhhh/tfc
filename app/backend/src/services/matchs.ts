@@ -59,12 +59,12 @@ export default class MatchsService {
   async patchProgress(id: number) {
     await this.matchs.update({ inProgress: false }, { where: { id } });
 
-    return { code: 200 };
+    return { code: 200, message: 'ok' };
   }
 
   async patchScore(id: number, body: IScore) {
     await this.matchs.update(body, { where: { id } });
 
-    return { code: 200 };
+    return { code: 200, message: 'ok' };
   }
 }

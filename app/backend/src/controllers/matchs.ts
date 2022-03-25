@@ -33,15 +33,15 @@ export default class MatchController {
 
   async patchMatchProgress(req: Request, res: Response) {
     const { id } = req.params;
-    const { code } = await this.service.patchProgress(Number(id));
+    const { code, message } = await this.service.patchProgress(Number(id));
 
-    return res.status(code).end();
+    return res.status(code).json({ message });
   }
 
   async patchMatchScore(req: Request, res: Response) {
     const { id } = req.params;
-    const { code } = await this.service.patchScore(Number(id), req.body);
+    const { code, message } = await this.service.patchScore(Number(id), req.body);
 
-    return res.status(code).end();
+    return res.status(code).json({ message });
   }
 }
