@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { MatchController } from '../controllers';
-import { matchValidation, authToken } from '../middlewares';
+import { authToken } from '../middlewares';
 
 export default class MatchRoute {
   public match: Router;
