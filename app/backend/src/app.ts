@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { ClubsRoute, LoginRoute, MatchRoute } from './routes';
+import { ClubsRoute, LoginRoute, MatchRoute, LeaderboardRoute } from './routes';
 
 class App {
   public app: express.Express;
@@ -22,6 +22,7 @@ class App {
     this.app.use('/login', new LoginRoute().login);
     this.app.use('/clubs', new ClubsRoute().clubs);
     this.app.use('/matchs', new MatchRoute().match);
+    this.app.use('/leaderboard', new LeaderboardRoute().leaderboard);
     // falta implementar handlers de erro
   }
 

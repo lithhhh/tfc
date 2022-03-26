@@ -1,5 +1,6 @@
 import { ILogin, IJwtPayload, Authorization, IId } from './login';
 import { IMatch, IMatchWithScore, IScore } from './match';
+import { ILeaderboard, ISortArray } from './leaderboard';
 
 export {
   ILogin,
@@ -9,4 +10,6 @@ export {
   IMatch,
   IMatchWithScore,
   IScore,
+  ILeaderboard,
+  ISortArray,
 };
