@@ -13,6 +13,8 @@ export default class LeaderboardRoute {
   }
 
   private routes(): void {
-    this.leaderboard.get('/home', this.leaderboardController.getLeaderboard);
+    this.leaderboard.get('/', this.leaderboardController.getLeaderboard);
+    this.leaderboard.get('/home', this.leaderboardController.getLeaderboardHome);
+    this.leaderboard.get('/away', this.leaderboardController.getLeaderboardAway);
   }
 }

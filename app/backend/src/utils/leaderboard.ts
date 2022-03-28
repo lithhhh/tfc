@@ -1,6 +1,6 @@
 import { IMatchWithScore, ILeaderboard, ISortArray } from '../interfaces';
 
-const getTotalScore = (id: number, matchs: IMatchWithScore[]): number => {
+const totalScore = (id: number, matchs: IMatchWithScore[]): number => {
   const points = matchs.reduce((acc, cur) => {
     if (cur.homeTeam === id) {
       if (cur.homeTeamGoals > cur.awayTeamGoals) return acc + 3;
@@ -17,14 +17,26 @@ const getTotalScore = (id: number, matchs: IMatchWithScore[]): number => {
   return points;
 };
 
-const countMatchs = (id: number, matchs: IMatchWithScore[]): number => {
-  const count = matchs.reduce((acc, cur) => {
+const countMatchs = (id: number, matchs: IMatchWithScore[]) => {
+  const all = matchs.reduce((acc, cur) => {
     if (cur.homeTeam === id || cur.awayTeam === id) return acc + 1;
 
     return acc;
   }, 0);
 
-  return count;
+  const home = matchs.reduce((acc, cur) => {
+    if (cur.homeTeam === id) return acc + 1;
+
+    return acc;
+  }, 0);
+
+  const away = matchs.reduce((acc, cur) => {
+    if (cur.awayTeam === id) return acc + 1;
+
+    return acc;
+  }, 0);
+
+  return { all, home, away };
 };
 
 const resultMatch = (id: number, matchs: IMatchWithScore[]) => {
@@ -49,22 +61,26 @@ const resultMatch = (id: number, matchs: IMatchWithScore[]) => {
   return results;
 };
 
-const resultGoals = (id: number, matchs: IMatchWithScore[]) => {
-  const results = { favor: 0, own: 0 };
+const resGoals = (id: number, matchs: IMatchWithScore[]) => {
+  const res = { all: { favor: 0, own: 0 }, home: { favor: 0, own: 0 }, away: { favor: 0, own: 0 } };
 
   matchs.forEach((cur) => {
     if (cur.homeTeam === id) {
-      results.favor += cur.homeTeamGoals;
-      results.own += cur.awayTeamGoals;
+      res.all.favor += cur.homeTeamGoals;
+      res.all.own += cur.awayTeamGoals;
+      res.home.favor += cur.homeTeamGoals;
+      res.home.own += cur.awayTeamGoals;
     }
 
     if (cur.awayTeam === id) {
-      results.favor += cur.awayTeamGoals;
-      results.own += cur.homeTeamGoals;
+      res.away.favor += cur.awayTeamGoals;
+      res.away.own += cur.homeTeamGoals;
+      res.away.favor += cur.awayTeamGoals;
+      res.away.own += cur.homeTeamGoals;
     }
   });
 
-  return { results, balance: results.favor - results.own };
+  return { all: res.all, home: res.home, away: res.away };
 };
 /* P/(J*3)*100 */
 const efficiencyCalc = (P: number, J: number) => Number(((P / (J * 3)) * 100).toFixed(2));
@@ -92,12 +108,64 @@ const sortLeaderboard = (
 const sortArr = (arr: ILeaderboard[]) => arr
   .sort((a: ILeaderboard, b: ILeaderboard) => sortLeaderboard(a, b, 0));
 
+// possuem opções / foram criados para driblar o chato (lint)
+
+const resultMatchOptionalTeam = (id: number, matchs: IMatchWithScore[]) => {
+  const results = {
+    home: { win: 0, draw: 0, lose: 0 }, away: { win: 0, draw: 0, lose: 0 },
+  };
+
+  matchs.forEach((cur) => {
+    if (cur.homeTeam === id) {
+      if (cur.homeTeamGoals > cur.awayTeamGoals) results.home.win += 1;
+      if (cur.homeTeamGoals === cur.awayTeamGoals) results.home.draw += 1;
+      if (cur.homeTeamGoals < cur.awayTeamGoals) results.home.lose += 1;
+    }
+  });
+
+  matchs.forEach((cur) => {
+    if (cur.awayTeam === id) {
+      if (cur.awayTeamGoals > cur.homeTeamGoals) results.away.win += 1;
+      if (cur.awayTeamGoals === cur.homeTeamGoals) results.away.draw += 1;
+      if (cur.awayTeamGoals < cur.homeTeamGoals) results.away.lose += 1;
+    }
+  });
+
+  return { away: results.away, home: results.home };
+};
+
+const totalScoreOptionalTeam = (
+  id: number,
+  matchs: IMatchWithScore[],
+) => {
+  const pointsHomeTeam = matchs.reduce((acc, cur) => {
+    if (cur.homeTeam === id) {
+      if (cur.homeTeamGoals > cur.awayTeamGoals) return acc + 3;
+      if (cur.homeTeamGoals === cur.awayTeamGoals) return acc + 1;
+    }
+
+    return acc;
+  }, 0);
+
+  const pointsAwayTeam = matchs.reduce((acc, cur) => {
+    if (cur.awayTeam === id) {
+      if (cur.awayTeamGoals > cur.homeTeamGoals) return acc + 3;
+      if (cur.awayTeamGoals === cur.homeTeamGoals) return acc + 1;
+    }
+    return acc;
+  }, 0);
+
+  return { home: pointsHomeTeam, away: pointsAwayTeam };
+};
+
 export {
-  getTotalScore,
+  totalScore,
   countMatchs,
   resultMatch,
-  resultGoals,
+  resGoals,
   efficiencyCalc,
   sortLeaderboard,
+  resultMatchOptionalTeam,
+  totalScoreOptionalTeam,
   sortArr,
 };

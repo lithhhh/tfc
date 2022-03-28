@@ -1,21 +1,25 @@
 import jwt from './jwt';
 import {
-  getTotalScore,
+  totalScore,
   countMatchs,
   resultMatch,
-  resultGoals,
+  resGoals,
   efficiencyCalc,
   sortLeaderboard,
   sortArr,
+  totalScoreOptionalTeam,
+  resultMatchOptionalTeam,
 } from './leaderboard';
 
 export {
   jwt,
-  getTotalScore,
+  totalScore,
   countMatchs,
   resultMatch,
-  resultGoals,
+  resGoals,
   efficiencyCalc,
   sortLeaderboard,
+  totalScoreOptionalTeam,
+  resultMatchOptionalTeam,
   sortArr,
 };
