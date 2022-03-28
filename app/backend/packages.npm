@@ -1,2 +1,4 @@
 express-async-errors
 joi
+bcryptjs
+@types/bcryptjs
