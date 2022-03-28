@@ -11,6 +11,10 @@ import {
   resultMatchOptionalTeam,
 } from './leaderboard';
 
+import {
+  compare, hash,
+} from './bcrypt';
+
 export {
   jwt,
   totalScore,
@@ -22,4 +26,6 @@ export {
   totalScoreOptionalTeam,
   resultMatchOptionalTeam,
   sortArr,
+  hash,
+  compare,
 };
