@@ -73,8 +73,8 @@ const resGoals = (id: number, matchs: IMatchWithScore[]) => {
     }
 
     if (cur.awayTeam === id) {
-      res.away.favor += cur.awayTeamGoals;
-      res.away.own += cur.homeTeamGoals;
+      res.all.favor += cur.awayTeamGoals;
+      res.all.own += cur.homeTeamGoals;
       res.away.favor += cur.awayTeamGoals;
       res.away.own += cur.homeTeamGoals;
     }
