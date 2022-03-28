@@ -16,4 +16,7 @@ export interface Authorization {
 
 export interface IId {
   id: number
+  role: string
+  email: string
+  username: string
 }

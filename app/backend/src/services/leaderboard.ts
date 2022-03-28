@@ -30,7 +30,7 @@ export default class LeaderboardService {
       totalLosses: resultMatch(id, matchs as []).lose,
       goalsFavor: resGoals(id, matchs as []).all.favor,
       goalsOwn: resGoals(id, matchs as []).all.own,
-      goalsBalance: resGoals(id, matchs as []).all.favor - resGoals(id, matchs as []).home.own,
+      goalsBalance: resGoals(id, matchs as []).all.favor - resGoals(id, matchs as []).all.own,
       efficiency: efficiencyCalc(
         totalScore(id, matchs as []),
         countMatchs(id, matchs as []).all,

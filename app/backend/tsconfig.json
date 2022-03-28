@@ -19,6 +19,6 @@
     },
     "typeRoots": ["./src/types", "./node_modules/@types" ],
   },
-  "include": ["src/**/*", "build/database"],
+  "include": ["src/**/*"],
   "exclude": ["src/tests"]
 }
