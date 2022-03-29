@@ -20,7 +20,8 @@ export default class LeaderboardService {
   async getLeaderboard() {
     const { clubs } = await this.clubs.clubsRequest();
     const { matchs } = await this.match.inProgressRequest(false);
-
+    // cada function é uma regra de negócio que itera sobre o id dos clubs para identificação do time,
+    // e as matchs que registram onde tais times jogaram, extraindo dados para montagem da tabela de leaderboard.
     const leaderboard = clubs.map(({ clubName, id }) => ({
       name: clubName,
       totalPoints: totalScore(id, matchs as []),

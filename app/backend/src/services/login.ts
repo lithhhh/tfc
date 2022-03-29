@@ -13,10 +13,9 @@ export default class Login {
       raw: true,
     });
 
-    const comparation = await compare(login.password, user?.password as string);
-
-    if (!user || !comparation) return { message: 'Incorrect email or password', code: 401 };
-
+    if (!user || await compare(login.password, user?.password as string)) {
+      return { message: 'Incorrect email or password', code: 401 };
+    }
     const payloadUser = {
       user: {
         id: user.id,
@@ -25,11 +24,8 @@ export default class Login {
         email: user.email,
       } };
 
-    const token = jwt.signToken(payloadUser.user);
-
     return {
-      code: 200,
-      payload: { user: payloadUser.user, token },
+      code: 200, payload: { user: payloadUser.user, token: jwt.signToken(payloadUser.user) },
     };
   }
 
