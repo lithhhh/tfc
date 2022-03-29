@@ -13,7 +13,7 @@ export default class Login {
       raw: true,
     });
 
-    if (!user || await compare(login.password, user?.password as string)) {
+    if (!user || !(await compare(login.password, user?.password as string))) {
       return { message: 'Incorrect email or password', code: 401 };
     }
     const payloadUser = {
