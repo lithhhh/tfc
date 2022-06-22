@@ -16,6 +16,7 @@ export default class Login {
     if (!user || !(await compare(login.password, user?.password as string))) {
       return { message: 'Incorrect email or password', code: 401 };
     }
+
     const payloadUser = {
       user: {
         id: user.id,
