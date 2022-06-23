@@ -1,5 +1,7 @@
 import * as express from 'express';
+import 'express-async-errors';
 import { ClubsRoute, LoginRoute, MatchRoute, LeaderboardRoute } from './routes';
+import { errorHandler } from './middlewares';
 
 class App {
   public app: express.Express;
@@ -7,6 +9,8 @@ class App {
   constructor() {
     this.app = express();
     this.config();
+    this.routes();
+    this.errorHandler();
   }
 
   private config():void {
@@ -19,11 +23,17 @@ class App {
 
     this.app.use(accessControl);
     this.app.use(express.json());
+  }
+
+  private routes():void {
     this.app.use('/login', new LoginRoute().login);
     this.app.use('/clubs', new ClubsRoute().clubs);
     this.app.use('/matchs', new MatchRoute().match);
     this.app.use('/leaderboard', new LeaderboardRoute().leaderboard);
-    // falta implementar handlers de erro
+  }
+
+  private errorHandler(): void {
+    this.app.use(errorHandler);
   }
 
   public start(PORT: string | number):void {
