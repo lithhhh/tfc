@@ -26,10 +26,10 @@ class App {
   }
 
   private routes():void {
-    this.app.use('/login', new LoginRoute().login);
-    this.app.use('/clubs', new ClubsRoute().clubs);
-    this.app.use('/matchs', new MatchRoute().match);
-    this.app.use('/leaderboard', new LeaderboardRoute().leaderboard);
+    this.app.use('/login', new LoginRoute().route);
+    this.app.use('/clubs', new ClubsRoute().route);
+    this.app.use('/matchs', new MatchRoute().route);
+    this.app.use('/leaderboard', new LeaderboardRoute().route);
   }
 
   private errorHandler(): void {
