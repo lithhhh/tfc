@@ -30,7 +30,6 @@ class App {
     this.app.use('/clubs', new ClubsRoute().route);
     this.app.use('/matchs', new MatchRoute().route);
     this.app.use('/leaderboard', new LeaderboardRoute().route);
-
   }
 
   private errorHandler(): void {
