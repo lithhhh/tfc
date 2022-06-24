@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { MatchsService } from '../services';
+import { statusCodes, StatusMessage } from '../utils';
 
 export default class MatchController {
   private service: MatchsService;
@@ -17,31 +18,31 @@ export default class MatchController {
     const { inProgress } = req.query;
 
     if (inProgress) {
-      const { code, matchs } = await this.service.inProgressRequest(inProgress === 'true');
-      return res.status(code).json(matchs);
+      const matchsInProgress = await this.service.inProgressRequest(inProgress === 'true');
+      return res.status(statusCodes.OK).json(matchsInProgress);
     }
 
-    const { code, matchs } = await this.service.matchRequest();
-    return res.status(code).json(matchs);
+    const matchs = await this.service.matchRequest();
+    return res.status(statusCodes.OK).json(matchs);
   }
 
   async createMatch(req: Request, res: Response) {
-    const { code, message } = await this.service.createMatch(req.body);
+    const createdMatch = await this.service.createMatch(req.body);
 
-    return res.status(code).json(message);
+    return res.status(statusCodes.CREATED).json(createdMatch);
   }
 
   async patchMatchProgress(req: Request, res: Response) {
     const { id } = req.params;
-    const { code, message } = await this.service.patchProgress(Number(id));
+    await this.service.patchProgress(Number(id));
 
-    return res.status(code).json({ message });
+    return res.status(statusCodes.OK).json({ message: StatusMessage.OK });
   }
 
   async patchMatchScore(req: Request, res: Response) {
     const { id } = req.params;
-    const { code, message } = await this.service.patchScore(Number(id), req.body);
+    await this.service.patchScore(Number(id), req.body);
 
-    return res.status(code).json({ message });
+    return res.status(statusCodes.OK).json({ message: StatusMessage.OK });
   }
 }
