@@ -1,6 +1,7 @@
 import Match from '../../database/models/Match';
 import Clubs from '../../database/models/Club';
 import { IMatch, IScore } from '../interfaces';
+import { DomainError, statusCodes, StatusMessage } from '../utils';
 
 export default class MatchsService {
   constructor(
@@ -12,7 +13,7 @@ export default class MatchsService {
   // ps: sem que o Lint reclame...
 
   async inProgressRequest(inProgress: boolean) {
-    const matchs = await this.matchs
+    return this.matchs
       .findAll(
         {
           where: { inProgress },
@@ -21,11 +22,10 @@ export default class MatchsService {
             { model: this.clubs, as: 'awayClub', attributes: ['clubName'] },
           ] },
       );
-    return { matchs, code: 200 };
   }
 
   async matchRequest() {
-    const matchs = await this.matchs
+    return this.matchs
       .findAll(
         {
           include: [
@@ -33,15 +33,11 @@ export default class MatchsService {
             { model: this.clubs, as: 'awayClub', attributes: ['clubName'] },
           ] },
       );
-    return { matchs, code: 200 };
   }
 
   async createMatch(body: IMatch) {
     if (body.awayTeam === body.homeTeam) {
-      return {
-        message: { message: 'It is not possible to create a match with two equal teams' },
-        code: 401,
-      };
+      throw new DomainError(statusCodes.BAD_REQUEST, StatusMessage.EQUAL_TEAMS);
     }
 
     const teams = await this.clubs.findAll({
@@ -50,21 +46,17 @@ export default class MatchsService {
     });
 
     if (teams.length < 2) {
-      return { message: { message: 'There is no team with such id!' }, code: 401 };
+      throw new DomainError(statusCodes.BAD_REQUEST, StatusMessage.TEAM_NOT_FOUND);
     }
 
-    return { code: 201, message: await this.matchs.create(body) };
+    return this.matchs.create(body);
   }
 
   async patchProgress(id: number) {
-    await this.matchs.update({ inProgress: false }, { where: { id } });
-
-    return { code: 200, message: 'ok' };
+    return this.matchs.update({ inProgress: false }, { where: { id } });
   }
 
   async patchScore(id: number, body: IScore) {
-    await this.matchs.update(body, { where: { id } });
-
-    return { code: 200, message: 'ok' };
+    return this.matchs.update(body, { where: { id } });
   }
 }
