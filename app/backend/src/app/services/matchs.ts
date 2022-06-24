@@ -1,5 +1,5 @@
-import Match from '../database/models/Match';
-import Clubs from '../database/models/Club';
+import Match from '../../database/models/Match';
+import Clubs from '../../database/models/Club';
 import { IMatch, IScore } from '../interfaces';
 
 export default class MatchsService {
