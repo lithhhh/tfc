@@ -1,5 +1,5 @@
 import { ILogin } from '../interfaces';
-import User from '../database/models/User';
+import User from '../../database/models/User';
 import { jwt, /* hash, */ compare } from '../utils';
 
 export default class Login {
