@@ -1,4 +1,4 @@
-import Clubs from '../database/models/Club';
+import Clubs from '../../database/models/Club';
 
 export default class ClubsService {
   constructor(
