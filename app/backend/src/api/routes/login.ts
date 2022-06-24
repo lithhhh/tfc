@@ -1,28 +1,15 @@
-import { Router } from 'express';
 import { Auth } from '../middlewares';
 import { LoginController } from '../../app/controllers';
+import Route from './abstract.route';
 
-export default class LoginRoute {
-  public login: Router; // public para declarar no app.ts
-
-  private loginController: LoginController;
-
-  constructor() {
-    this.login = Router(); // minha rota
-    this.loginController = new LoginController(); // instanciação do controller
-    this.routes(); // declarando o método
+export default class LoginRoute extends Route<LoginController> {
+  constructor(controller = new LoginController()) {
+    super(controller);
   }
 
-  private routes(): void {
-    this.login.post(
-      '/',
-      this.loginController.login,
-    );
+  routes(): void {
+    this.route.post('/', this.controller.login);
 
-    this.login.get(
-      '/validate',
-      Auth.Auth,
-      this.loginController.loginValidate,
-    );
+    this.route.get('/validate', Auth.Auth, this.controller.loginValidate);
   }
 }
