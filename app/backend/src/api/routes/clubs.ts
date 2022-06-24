@@ -1,26 +1,20 @@
-import { Router } from 'express';
 import { ClubsController } from '../../app/controllers';
+import Route from './abstract.route';
 
-export default class ClubsRoute {
-  public clubs: Router;
-
-  private clubsControler: ClubsController;
-
-  constructor() {
-    this.clubs = Router();
-    this.clubsControler = new ClubsController();
-    this.routes();
+export default class ClubsRoute extends Route<ClubsController> {
+  constructor(controller = new ClubsController()) {
+    super(controller);
   }
 
-  private routes() {
-    this.clubs.get(
+  routes() {
+    this.route.get(
       '/',
-      this.clubsControler.getClubs,
+      this.controller.getClubs,
     );
 
-    this.clubs.get(
+    this.route.get(
       '/:id',
-      this.clubsControler.getClubsById,
+      this.controller.getClubsById,
     );
   }
 }
