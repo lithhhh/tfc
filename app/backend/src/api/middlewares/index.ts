@@ -5,7 +5,7 @@ import matchScoreValidation from './joi/matchScore.schema';
 
 import errorHandler from './error.handler';
 
-import Auth from './jwt/validate';
+import Auth from './jwt/validate.jwt';
 
 export {
   loginValidation,
