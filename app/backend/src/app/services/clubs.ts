@@ -1,4 +1,5 @@
 import Clubs from '../../database/models/Club';
+import { statusCodes, DomainError, StatusMessage } from '../utils';
 
 export default class ClubsService {
   constructor(
@@ -6,9 +7,7 @@ export default class ClubsService {
   ) {}
 
   async clubsRequest() {
-    const clubs = await this.clubs.findAll();
-
-    return { code: 200, clubs };
+    return this.clubs.findAll();
   }
 
   async clubsRequestById(id: string) {
@@ -17,8 +16,8 @@ export default class ClubsService {
       raw: true,
     });
 
-    if (club === null) return { message: 'Club not found', code: 404 };
+    if (club === null) throw new DomainError(statusCodes.NOT_FOUND, StatusMessage.TEAM_NOT_FOUND);
 
-    return { code: 200, message: club };
+    return club;
   }
 }
