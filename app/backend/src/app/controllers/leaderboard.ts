@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { LeaderboardService } from '../services';
+import { statusCodes } from '../utils';
 
 export default class LeaderboardController {
   private service: LeaderboardService;
@@ -12,20 +13,20 @@ export default class LeaderboardController {
   }
 
   async getLeaderboard(_req: Request, res: Response) {
-    const { code, leaderboard } = await this.service.getLeaderboard();
+    const leaderboard = await this.service.getLeaderboard();
 
-    return res.status(code).json(leaderboard);
+    return res.status(statusCodes.OK).json(leaderboard);
   }
 
   async getLeaderboardHome(_req: Request, res: Response) {
-    const { code, leaderboard } = await this.service.getLeaderboardAwayOrHome('home');
+    const leaderboard = await this.service.getLeaderboardAwayOrHome('home');
 
-    return res.status(code).json(leaderboard);
+    return res.status(statusCodes.OK).json(leaderboard);
   }
 
   async getLeaderboardAway(_req: Request, res: Response) {
-    const { code, leaderboard } = await this.service.getLeaderboardAwayOrHome('away');
+    const leaderboard = await this.service.getLeaderboardAwayOrHome('away');
 
-    return res.status(code).json(leaderboard);
+    return res.status(statusCodes.OK).json(leaderboard);
   }
 }
