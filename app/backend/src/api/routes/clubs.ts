@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ClubsController } from '../controllers';
+import { ClubsController } from '../../app/controllers';
 
 export default class ClubsRoute {
   public clubs: Router;
