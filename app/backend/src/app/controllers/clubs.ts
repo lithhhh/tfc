@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { ClubsService } from '../services';
+import { statusCodes } from '../utils';
 
 export default class ClubsController {
   private service: ClubsService;
@@ -11,15 +12,15 @@ export default class ClubsController {
   }
 
   async getClubs(req: Request, res: Response) {
-    const { code, clubs } = await this.service.clubsRequest();
+    const clubs = await this.service.clubsRequest();
 
-    return res.status(code).json(clubs);
+    return res.status(statusCodes.OK).json(clubs);
   }
 
   async getClubsById(req: Request, res: Response) {
     const { id } = req.params;
-    const { code, message } = await this.service.clubsRequestById(id);
+    const club = await this.service.clubsRequestById(id);
 
-    return res.status(code).json(message);
+    return res.status(statusCodes.OK).json(club);
   }
 }
