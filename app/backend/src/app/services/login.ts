@@ -1,6 +1,6 @@
 import { ILogin } from '../interfaces';
 import User from '../../database/models/User';
-import { jwt, /* hash, */ compare } from '../utils';
+import { jwt, compare, DomainError, statusCodes, StatusMessage } from '../utils';
 
 export default class Login {
   constructor(
@@ -14,7 +14,7 @@ export default class Login {
     });
 
     if (!user || !(await compare(login.password, user?.password as string))) {
-      return { message: 'Incorrect email or password', code: 401 };
+      throw new DomainError(statusCodes.UNAUTHORIZED, StatusMessage.INCORRECT_CREDENTIALS);
     }
 
     const payloadUser = {
@@ -25,9 +25,7 @@ export default class Login {
         email: user.email,
       } };
 
-    return {
-      code: 200, payload: { user: payloadUser.user, token: jwt.signToken(payloadUser.user) },
-    };
+    return { user: payloadUser.user, token: jwt.signToken(payloadUser.user) };
   }
 
   async validate(id: number) {
@@ -37,6 +35,6 @@ export default class Login {
       raw: true,
     });
 
-    return { code: 200, role: role?.role };
+    return role;
   }
 }
