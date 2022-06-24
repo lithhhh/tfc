@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { LeaderboardController } from '../controllers';
+import { LeaderboardController } from '../../app/controllers';
 
 export default class LeaderboardRoute {
   public leaderboard: Router;
