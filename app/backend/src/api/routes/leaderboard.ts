@@ -1,20 +1,14 @@
-import { Router } from 'express';
 import { LeaderboardController } from '../../app/controllers';
+import Route from './abstract.route';
 
-export default class LeaderboardRoute {
-  public leaderboard: Router;
-
-  private leaderboardController: LeaderboardController;
-
-  constructor() {
-    this.leaderboard = Router();
-    this.leaderboardController = new LeaderboardController();
-    this.routes();
+export default class LeaderboardRoute extends Route<LeaderboardController> {
+  constructor(controller = new LeaderboardController()) {
+    super(controller);
   }
 
-  private routes(): void {
-    this.leaderboard.get('/', this.leaderboardController.getLeaderboard);
-    this.leaderboard.get('/home', this.leaderboardController.getLeaderboardHome);
-    this.leaderboard.get('/away', this.leaderboardController.getLeaderboardAway);
+  routes(): void {
+    this.route.get('/', this.controller.getLeaderboard);
+    this.route.get('/home', this.controller.getLeaderboardHome);
+    this.route.get('/away', this.controller.getLeaderboardAway);
   }
 }

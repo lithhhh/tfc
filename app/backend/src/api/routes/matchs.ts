@@ -1,25 +1,16 @@
-import { Router } from 'express';
 import { MatchController } from '../../app/controllers';
 import { Auth } from '../middlewares';
+import Route from './abstract.route';
 
-export default class MatchRoute {
-  public match: Router;
-
-  private matchsController: MatchController;
-
-  constructor() {
-    this.match = Router();
-    this.matchsController = new MatchController();
-    this.routes();
+export default class MatchRoute extends Route<MatchController> {
+  constructor(controller = new MatchController()) {
+    super(controller);
   }
 
-  private routes() {
-    this.match.get('/', this.matchsController.getMatchs);
-
-    this.match.post('/', Auth.onlyAdminAuth, this.matchsController.createMatch);
-
-    this.match.patch('/:id/finish', Auth.onlyAdminAuth, this.matchsController.patchMatchProgress);
-
-    this.match.patch('/:id', Auth.onlyAdminAuth, this.matchsController.patchMatchScore);
+  routes() {
+    this.route.get('/', this.controller.getMatchs);
+    this.route.post('/', Auth.onlyAdminAuth, this.controller.createMatch);
+    this.route.patch('/:id/finish', Auth.onlyAdminAuth, this.controller.patchMatchProgress);
+    this.route.patch('/:id', Auth.onlyAdminAuth, this.controller.patchMatchScore);
   }
 }
