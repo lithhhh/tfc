@@ -158,4 +158,10 @@ export default class LeaderboardCreator {
     }
     return 0;
   };
+
+  private sortArrLeaderboard = (arr: ILeaderboard[]) => arr
+    .sort((a: ILeaderboard, b: ILeaderboard) => this.sortLeaderboard(a, b, 0));
+
+  // cada function é uma regra de negócio que itera sobre o id dos clubs para identificação do time,
+  // e as matchs que registram onde tais times jogaram, extraindo dados para montagem da tabela de leaderboard.
 }
