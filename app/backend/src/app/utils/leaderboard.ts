@@ -93,4 +93,7 @@ export default class LeaderboardCreator {
 
     return res;
   };
+
+  /* P/(J*3)*100 */
+  private efficiencyClub = (P: number, J: number) => Number(((P / (J * 3)) * 100).toFixed(2));
 }
