@@ -185,4 +185,25 @@ export default class LeaderboardCreator {
 
     return this.sortArrLeaderboard(disorganizedLeaderboardclubs);
   }
+
+  public leaderboardOptional(clubs: IClub[], matchs: IMatchWithScore[], team: 'away' | 'home') {
+    const disorganizedLeaderboardclubs = clubs.map(({ clubName, id }) => ({
+      name: clubName,
+      totalPoints: this.totalScoreOptionalTeam(id, matchs as [])[team],
+      totalGames: this.countMatchs(id, matchs as [])[team],
+      totalVictories: this.resultMatchOptionalTeam(id, matchs as [])[team].win,
+      totalDraws: this.resultMatchOptionalTeam(id, matchs as [])[team].draw,
+      totalLosses: this.resultMatchOptionalTeam(id, matchs as [])[team].lose,
+      goalsFavor: this.resGoals(id, matchs as [])[team].favor,
+      goalsOwn: this.resGoals(id, matchs as [])[team].own,
+      goalsBalance: this
+        .resGoals(id, matchs as [])[team].favor - this.resGoals(id, matchs as [])[team].own,
+      efficiency: this.efficiencyClub(
+        this.totalScoreOptionalTeam(id, matchs as [])[team],
+        this.countMatchs(id, matchs as [])[team],
+      ),
+    }));
+
+    return this.sortArrLeaderboard(disorganizedLeaderboardclubs);
+  }
 }
