@@ -96,4 +96,27 @@ export default class LeaderboardCreator {
 
   /* P/(J*3)*100 */
   private efficiencyClub = (P: number, J: number) => Number(((P / (J * 3)) * 100).toFixed(2));
+
+  private resultMatchOptionalTeam = (id: number, matchs: IMatchWithScore[]) => {
+    const home = { win: 0, draw: 0, lose: 0 };
+    const away = { win: 0, draw: 0, lose: 0 };
+
+    matchs.forEach((cur) => {
+      if (cur.homeTeam === id) {
+        if (cur.homeTeamGoals > cur.awayTeamGoals) home.win += 1;
+        if (cur.homeTeamGoals === cur.awayTeamGoals) home.draw += 1;
+        if (cur.homeTeamGoals < cur.awayTeamGoals) home.lose += 1;
+      }
+    });
+
+    matchs.forEach((cur) => {
+      if (cur.awayTeam === id) {
+        if (cur.awayTeamGoals > cur.homeTeamGoals) away.win += 1;
+        if (cur.awayTeamGoals === cur.homeTeamGoals) away.draw += 1;
+        if (cur.awayTeamGoals < cur.homeTeamGoals) away.lose += 1;
+      }
+    });
+
+    return { away, home };
+  };
 }
