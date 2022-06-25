@@ -164,4 +164,25 @@ export default class LeaderboardCreator {
 
   // cada function é uma regra de negócio que itera sobre o id dos clubs para identificação do time,
   // e as matchs que registram onde tais times jogaram, extraindo dados para montagem da tabela de leaderboard.
+
+  public leaderboard(clubs: IClub[], matchs: IMatchWithScore[]) {
+    const disorganizedLeaderboardclubs = clubs.map(({ clubName, id }) => ({
+      name: clubName,
+      totalPoints: this.totalScore(id, matchs as []),
+      totalGames: this.countMatchs(id, matchs as []).all,
+      totalVictories: this.resultMatch(id, matchs as []).win,
+      totalDraws: this.resultMatch(id, matchs as []).draw,
+      totalLosses: this.resultMatch(id, matchs as []).lose,
+      goalsFavor: this.resGoals(id, matchs as []).all.favor,
+      goalsOwn: this.resGoals(id, matchs as []).all.own,
+      goalsBalance: this.resGoals(id, matchs as []).all.favor - this.resGoals(id, matchs as [])
+        .all.own,
+      efficiency: this.efficiencyClub(
+        this.totalScore(id, matchs as []),
+        this.countMatchs(id, matchs as []).all,
+      ),
+    }));
+
+    return this.sortArrLeaderboard(disorganizedLeaderboardclubs);
+  }
 }
