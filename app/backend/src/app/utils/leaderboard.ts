@@ -69,4 +69,28 @@ export default class LeaderboardCreator {
 
     return results;
   };
+
+  private resGoals = (id: number, matchs: IMatchWithScore[]) => {
+    const res = {
+      all: { favor: 0, own: 0 }, home: { favor: 0, own: 0 }, away: { favor: 0, own: 0 },
+    };
+
+    matchs.forEach((cur) => {
+      if (cur.homeTeam === id) {
+        res.all.favor += cur.homeTeamGoals;
+        res.all.own += cur.awayTeamGoals;
+        res.home.favor += cur.homeTeamGoals;
+        res.home.own += cur.awayTeamGoals;
+      }
+
+      if (cur.awayTeam === id) {
+        res.all.favor += cur.awayTeamGoals;
+        res.all.own += cur.homeTeamGoals;
+        res.away.favor += cur.awayTeamGoals;
+        res.away.own += cur.homeTeamGoals;
+      }
+    });
+
+    return res;
+  };
 }
