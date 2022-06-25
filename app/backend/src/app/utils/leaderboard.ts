@@ -119,4 +119,28 @@ export default class LeaderboardCreator {
 
     return { away, home };
   };
+
+  private totalScoreOptionalTeam = (
+    id: number,
+    matchs: IMatchWithScore[],
+  ) => {
+    const pointsHomeTeam = matchs.reduce((acc, cur) => {
+      if (cur.homeTeam === id) {
+        if (cur.homeTeamGoals > cur.awayTeamGoals) return acc + 3;
+        if (cur.homeTeamGoals === cur.awayTeamGoals) return acc + 1;
+      }
+
+      return acc;
+    }, 0);
+
+    const pointsAwayTeam = matchs.reduce((acc, cur) => {
+      if (cur.awayTeam === id) {
+        if (cur.awayTeamGoals > cur.homeTeamGoals) return acc + 3;
+        if (cur.awayTeamGoals === cur.homeTeamGoals) return acc + 1;
+      }
+      return acc;
+    }, 0);
+
+    return { home: pointsHomeTeam, away: pointsAwayTeam };
+  };
 }
