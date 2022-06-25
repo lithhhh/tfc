@@ -25,4 +25,48 @@ export default class LeaderboardCreator {
 
     return points;
   };
+
+  private countMatchs = (id: number, matchs: IMatchWithScore[]) => {
+    const all = matchs.reduce((acc, cur) => {
+      if (cur.homeTeam === id || cur.awayTeam === id) return acc + 1;
+
+      return acc;
+    }, 0);
+
+    const home = matchs.reduce((acc, cur) => {
+      if (cur.homeTeam === id) return acc + 1;
+
+      return acc;
+    }, 0);
+
+    const away = matchs.reduce((acc, cur) => {
+      if (cur.awayTeam === id) return acc + 1;
+
+      return acc;
+    }, 0);
+
+    return { all, home, away };
+  };
+
+  private resultMatch = (id: number, matchs: IMatchWithScore[]) => {
+    const results = { win: 0, draw: 0, lose: 0 };
+
+    matchs.forEach((cur) => {
+      if (cur.homeTeam === id) {
+        if (cur.homeTeamGoals > cur.awayTeamGoals) results.win += 1;
+        if (cur.homeTeamGoals === cur.awayTeamGoals) results.draw += 1;
+        if (cur.homeTeamGoals < cur.awayTeamGoals) results.lose += 1;
+      }
+    });
+
+    matchs.forEach((cur) => {
+      if (cur.awayTeam === id) {
+        if (cur.awayTeamGoals > cur.homeTeamGoals) results.win += 1;
+        if (cur.awayTeamGoals === cur.homeTeamGoals) results.draw += 1;
+        if (cur.awayTeamGoals < cur.homeTeamGoals) results.lose += 1;
+      }
+    });
+
+    return results;
+  };
 }
