@@ -143,4 +143,19 @@ export default class LeaderboardCreator {
 
     return { home: pointsHomeTeam, away: pointsAwayTeam };
   };
+
+  private sortLeaderboard = (
+    a: ILeaderboard,
+    b: ILeaderboard,
+    i: number,
+    orderArr: ISortArray[] = this.sorting,
+  ): number => {
+    const ind = i;
+    if (a[orderArr[ind].fields] > b[orderArr[ind].fields]) return -1;
+    if (a[orderArr[ind].fields] < b[orderArr[ind].fields]) return 1;
+    if (a[orderArr[ind].fields] === b[orderArr[ind].fields]) {
+      return this.sortLeaderboard(a, b, ind + 1);
+    }
+    return 0;
+  };
 }
