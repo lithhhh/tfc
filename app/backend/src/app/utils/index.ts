@@ -1,15 +1,5 @@
 import jwt from './jwt';
-import {
-  totalScore,
-  countMatchs,
-  resultMatch,
-  resGoals,
-  efficiencyCalc,
-  sortLeaderboard,
-  sortArr,
-  totalScoreOptionalTeam,
-  resultMatchOptionalTeam,
-} from './leaderboard';
+import LeaderboardCreator from './leaderboard';
 
 import DomainError from './domainError';
 
@@ -22,15 +12,7 @@ import {
 
 export {
   jwt,
-  totalScore,
-  countMatchs,
-  resultMatch,
-  resGoals,
-  efficiencyCalc,
-  sortLeaderboard,
-  totalScoreOptionalTeam,
-  resultMatchOptionalTeam,
-  sortArr,
+  LeaderboardCreator,
   hash,
   compare,
   DomainError,
