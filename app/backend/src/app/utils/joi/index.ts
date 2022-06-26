@@ -3,6 +3,7 @@ import matchSchema from './matchs.schema';
 import matchScoreSchema from './matchScore.schema';
 import tokenSchema from './token.schema';
 import validateInput from './validator';
+import signupSchema from './signup.schema';
 
 export {
   loginSchema,
@@ -10,4 +11,5 @@ export {
   tokenSchema,
   matchScoreSchema,
   validateInput,
+  signupSchema,
 };
