@@ -1,4 +1,4 @@
-import LoginController from './login';
+import LoginController from './user';
 import ClubsController from './clubs';
 import MatchController from './matchs';
 import LeaderboardController from './leaderboard';
