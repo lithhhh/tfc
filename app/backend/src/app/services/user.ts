@@ -1,6 +1,7 @@
 import { ILogin, IRegister } from '../interfaces';
 import User from '../../database/models/User';
-import { jwt, compare, DomainError, statusCodes, StatusMessage, hash } from '../utils';
+import { compare, DomainError, statusCodes, StatusMessage, hash } from '../utils';
+import { jwt } from '../utils/jwt';
 
 export default class Login {
   constructor(

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { validateInput, matchSchema, matchScoreSchema } from '../utils/joi';
 import { MatchsService } from '../services';
 import { statusCodes, StatusMessage } from '../utils';
 
@@ -27,7 +28,9 @@ export default class MatchController {
   }
 
   async createMatch(req: Request, res: Response) {
-    const createdMatch = await this.service.createMatch(req.body);
+    const { body } = req;
+    validateInput(matchSchema, body);
+    const createdMatch = await this.service.createMatch(body);
 
     return res.status(statusCodes.CREATED).json(createdMatch);
   }
@@ -41,7 +44,9 @@ export default class MatchController {
 
   async patchMatchScore(req: Request, res: Response) {
     const { id } = req.params;
-    await this.service.patchScore(Number(id), req.body);
+    const { body } = req;
+    validateInput(matchScoreSchema, body);
+    await this.service.patchScore(Number(id), body);
 
     return res.status(statusCodes.OK).json({ message: StatusMessage.OK });
   }

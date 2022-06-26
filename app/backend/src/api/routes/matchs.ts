@@ -1,5 +1,5 @@
 import { MatchController } from '../../app/controllers';
-import { Auth } from '../middlewares';
+import { Auth } from '../../app/utils/jwt';
 import Route from './abstract.route';
 
 export default class MatchRoute extends Route<MatchController> {

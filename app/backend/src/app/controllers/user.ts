@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { IId } from '../interfaces';
 import { Login } from '../services';
-import { loginSchema, validateInput } from '../../api/middlewares/joi';
+import { loginSchema, validateInput, signupSchema } from '../utils/joi';
 import { statusCodes } from '../utils';
 
 export default class LoginController {
@@ -32,6 +32,7 @@ export default class LoginController {
 
   async newUser(req: Request, res: Response) {
     const { body } = req;
+    validateInput(signupSchema, body);
 
     const created = await this.service.newUser(body);
 

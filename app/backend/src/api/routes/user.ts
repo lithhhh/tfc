@@ -1,4 +1,4 @@
-import { Auth } from '../middlewares';
+import { Auth } from '../../app/utils/jwt';
 import { LoginController } from '../../app/controllers';
 import Route from './abstract.route';
 
