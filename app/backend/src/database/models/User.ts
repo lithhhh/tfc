@@ -30,6 +30,7 @@ User.init({
   role: {
     type: DataTypes.STRING,
     allowNull: false,
+    defaultValue: 'user',
   },
   email: {
     type: DataTypes.STRING,
