@@ -1,7 +1,7 @@
 import * as express from 'express';
 import 'express-async-errors';
 import { ClubsRoute, LoginRoute, MatchRoute, LeaderboardRoute } from './routes';
-import { errorHandler } from './middlewares';
+import errorHandler from './middlewares/error.handler';
 
 class App {
   public app: express.Express;
