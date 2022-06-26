@@ -8,8 +8,10 @@ export default class LoginRoute extends Route<LoginController> {
   }
 
   routes(): void {
-    this.route.post('/', this.controller.login);
+    this.route.post('/login', this.controller.login);
 
-    this.route.get('/validate', Auth.Auth, this.controller.loginValidate);
+    this.route.get('/login/validate', Auth.Auth, this.controller.loginValidate);
+
+    this.route.post('/signup', this.controller.newUser);
   }
 }
