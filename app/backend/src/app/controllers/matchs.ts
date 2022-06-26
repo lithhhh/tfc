@@ -18,11 +18,11 @@ export default class MatchController {
     const { inProgress } = req.query;
 
     if (inProgress) {
-      const matchsInProgress = await this.service.inProgressRequest(inProgress === 'true');
+      const matchsInProgress = await this.service.getMatchInProgress(inProgress === 'true');
       return res.status(statusCodes.OK).json(matchsInProgress);
     }
 
-    const matchs = await this.service.matchRequest();
+    const matchs = await this.service.getMatchs();
     return res.status(statusCodes.OK).json(matchs);
   }
 
