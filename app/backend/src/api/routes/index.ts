@@ -1,4 +1,4 @@
-import LoginRoute from './login';
+import LoginRoute from './user';
 import ClubsRoute from './clubs';
 import MatchRoute from './matchs';
 import LeaderboardRoute from './leaderboard';

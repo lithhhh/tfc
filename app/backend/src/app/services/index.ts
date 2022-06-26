@@ -1,4 +1,4 @@
-import Login from './login';
+import Login from './user';
 import ClubsService from './clubs';
 import MatchsService from './matchs';
 import LeaderboardService from './leaderboard';
