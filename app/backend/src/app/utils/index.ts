@@ -1,4 +1,3 @@
-import jwt from './jwt';
 import LeaderboardCreator from './leaderboard';
 
 import DomainError from './domainError';
@@ -11,7 +10,6 @@ import {
 } from './bcrypt';
 
 export {
-  jwt,
   LeaderboardCreator,
   hash,
   compare,
