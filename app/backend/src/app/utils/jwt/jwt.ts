@@ -1,7 +1,7 @@
 import { sign, verify } from 'jsonwebtoken';
 import 'dotenv/config';
 import { readFileSync } from 'fs';
-import { IJwtPayload } from '../interfaces';
+import { IJwtPayload } from '../../interfaces';
 
 const path = 'jwt.evaluation.key';
 
