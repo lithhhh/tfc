@@ -9,8 +9,10 @@ export default class LoginController {
 
   constructor() {
     this.service = new Login();
+
     this.login = this.login.bind(this);
     this.loginValidate = this.loginValidate.bind(this);
+    this.newUser = this.newUser.bind(this);
   }
 
   async login(req: Request, res: Response) {
@@ -26,5 +28,13 @@ export default class LoginController {
     const role = await this.service.validate(id);
 
     return res.status(statusCodes.OK).json(role);
+  }
+
+  async newUser(req: Request, res: Response) {
+    const { body } = req;
+
+    const created = await this.service.newUser(body);
+
+    return res.status(statusCodes.CREATED).json(created);
   }
 }
