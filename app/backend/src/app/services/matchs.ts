@@ -12,7 +12,7 @@ export default class MatchsService {
   // pense em como você pode unir os métodos abaixo (inProgressRequest e matchRequest);
   // ps: sem que o Lint reclame...
 
-  async inProgressRequest(inProgress: boolean) {
+  async getMatchInProgress(inProgress: boolean) {
     return this.matchs
       .findAll(
         {
@@ -24,7 +24,7 @@ export default class MatchsService {
       );
   }
 
-  async matchRequest() {
+  async getMatchs() {
     return this.matchs
       .findAll(
         {
