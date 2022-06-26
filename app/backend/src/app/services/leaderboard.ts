@@ -11,14 +11,14 @@ export default class LeaderboardService {
 
   async getLeaderboard() {
     const clubs = await this.clubs.clubsRequest();
-    const matchs = await this.match.inProgressRequest(false);
+    const matchs = await this.match.getMatchInProgress(false);
 
     return this.Leaderboard.leaderboard(clubs, matchs as []);
   }
 
   async getLeaderboardAwayOrHome(team: 'away' | 'home') {
     const clubs = await this.clubs.clubsRequest();
-    const matchs = await this.match.inProgressRequest(false);
+    const matchs = await this.match.getMatchInProgress(false);
 
     return this.Leaderboard.leaderboardOptional(clubs, matchs as [], team);
   }
