@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request } from 'express';
 import { tokenSchema, validateInput } from '../joi';
-import { DomainError, jwt, statusCodes, StatusMessage } from '../../../app/utils';
+import { DomainError, statusCodes, StatusMessage } from '..';
+import jwt from './jwt';
 
 export default {
   onlyAdminAuth: (req: Request, _res: Response, _next: NextFunction) => {
