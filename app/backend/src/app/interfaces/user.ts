@@ -3,6 +3,10 @@ export interface ILogin {
   password: string
 }
 
+export interface IRegister extends ILogin {
+  username: string
+}
+
 export interface IJwtPayload {
   id: number,
   username: string,
