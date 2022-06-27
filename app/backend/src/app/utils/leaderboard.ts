@@ -7,6 +7,7 @@ export default class LeaderboardCreator {
     { fields: 'goalsBalance', direction: 'desc' },
     { fields: 'goalsFavor', direction: 'desc' },
     { fields: 'goalsOwn', direction: 'asc' },
+    { fields: 'efficiency', direction: 'asc' }
   ];
 
   private totalScore = (id: number, matchs: IMatchWithScore[]): number => {
