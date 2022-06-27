@@ -11,6 +11,6 @@ export interface ILeaderboard {
 }
 
 export interface ISortArray {
-  fields: 'totalPoints' | 'totalVictories' | 'goalsBalance' | 'goalsOwn' | 'goalsFavor'
+  fields: 'totalPoints' | 'totalVictories' | 'goalsBalance' | 'goalsOwn' | 'goalsFavor' | 'efficiency'
   direction: 'asc' | 'desc'
 }
