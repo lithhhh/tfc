@@ -35,7 +35,7 @@ services:
       - DB_PORT=3306
     healthcheck:
       test: ["CMD", "lsof", "-t", "-i:3001"] # Caso utilize outra porta interna para o back, altere ela aqui também
-      timeout: 15s
+      timeout: 25s
       retries: 10
     networks:
       - app-network
@@ -51,7 +51,7 @@ services:
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"] # Deve aguardar o banco ficar operacional
       timeout: 25s
-      retries: 10
+      retries: 15
     cap_add:
       - SYS_NICE # Deve omitir alertas menores
     networks:
@@ -60,5 +60,5 @@ services:
 
 networks:
     app-network:
-        name: tfc-network
+        name: tfc
         driver: bridge
